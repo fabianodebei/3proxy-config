@@ -3,11 +3,11 @@ Description=3proxy Proxy Server
 After=network.target
 
 [Service]
-Type=forking
+Type=simple
 ExecStart=/usr/local/bin/3proxy /etc/3proxy/3proxy.cfg
-User=nobody
-Group=nogroup
+ExecStop=/bin/kill -TERM $MAINPID
+RemainAfterExit=no
 Restart=always
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=multi-target.target
