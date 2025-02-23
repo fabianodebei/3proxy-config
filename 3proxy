@@ -1,0 +1,33 @@
+# 3proxy configuration file
+
+# Daemon mode
+daemon
+
+# DNS servers
+nserver 8.8.8.8
+nserver 8.8.4.4
+
+# Logging
+log /var/log/3proxy/3proxy.log D
+logformat "- +_L%t.%. %N.%p %E %U %C:%c %R:%r %O %I %h %T"
+
+# Maximum number of connections
+maxconn 1000
+
+# Timeouts (1 5 30 60 180 1800 15 60)
+timeouts 1 5 30 60 180 1800 15 60
+
+# Authentication
+users username:CL:password
+
+# Using strong authentication
+auth strong
+allow username
+
+# Proxy services
+proxy -p3128  # HTTP(S) proxy on port 3128
+socks -p1080  # SOCKS proxy on port 1080
+
+# Allow HTTP(S) ports
+allow * * 80-88,8080-8088 HTTP
+allow * * 443,8443 HTTPS
