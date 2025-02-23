@@ -1,28 +1,39 @@
-# Configurazione generale
+# Configurazione generale del daemon
 daemon
-maxconn 500
+maxconn 1000
 nserver 8.8.8.8
 nserver 8.8.4.4
 nscache 65536
 timeouts 1 5 30 60 180 1800 15 60
 
-# Log
+# Configurazione dei log
 log /var/log/3proxy/3proxy.log D
 logformat "- +_L%t.%.  %N.%p %E %U %C:%c %R:%r %O %I %h %T"
 rotate 30
 
-# Utenti e accesso
-users admin:CL:password
+# Configurazione utenti e accesso
+users admin:CL:password123
 
-# Configurazione per proxy mobile
-# Sostituire IP_SERVER con l'IP del tuo server
-external IP_SERVER
+# Configurazione interfacce basata sull'output mostrato
+# Interfaccia principale
+external 192.168.1.143
 
-# Porta di partenza per i proxy
-setgid 65535
-setuid 65535
-
-# Configurazione proxy
+# Configurazione proxy per le interfacce eth0-eth3
+# Tutte condividono lo stesso subnet 192.168.8.100/24
 auth strong
 allow admin
-proxy -p3128 -a
+
+# Proxy per eth0
+proxy -p8080 -i192.168.8.100 -e192.168.8.100
+
+# Proxy per eth1
+proxy -p8081 -i192.168.8.100 -e192.168.8.100
+
+# Proxy per eth2
+proxy -p8082 -i192.168.8.100 -e192.168.8.100
+
+# Proxy per eth3
+proxy -p8083 -i192.168.8.100 -e192.168.8.100
+
+# Configurazione Huawei E3372
+proxy -p8084 -i192.168.8.100 -e192.168.8.100
