@@ -14,7 +14,8 @@ nserver 8.8.8.8
 nserver 8.8.4.4
 
 # Abilita il proxy HTTP sulla porta 3128
-proxy -n -p3128
+proxy -n -p3128 -i0.0.0.0
+
 
 # Abilita il proxy SOCKS5 sulla porta 1080
-socks -p1080
+socks -p1080 -i0.0.0.0
