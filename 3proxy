@@ -1,39 +1,20 @@
-# Configurazione generale del daemon
-daemon
+# Imposta il numero massimo di connessioni simultanee
 maxconn 1000
+
+# Abilita il logging
+log /var/log/3proxy.log D
+logformat "L%d-%m-%Y %H:%M:%S %U %C:%c %R:%r %O %I %h %T"
+
+# Directory di lavoro
+daemon
+pidfile /var/run/3proxy.pid
+
+# Assegna qualsiasi IP disponibile sulla macchina
 nserver 8.8.8.8
 nserver 8.8.4.4
-nscache 65536
-timeouts 1 5 30 60 180 1800 15 60
 
-# Configurazione dei log
-log /var/log/3proxy/3proxy.log D
-logformat "- +_L%t.%.  %N.%p %E %U %C:%c %R:%r %O %I %h %T"
-rotate 30
+# Abilita il proxy HTTP sulla porta 3128
+proxy -n -p3128
 
-# Configurazione utenti e accesso
-users admin:CL:password123
-
-# Configurazione interfacce basata sull'output mostrato
-# Interfaccia principale
-external 192.168.1.143
-
-# Configurazione proxy per le interfacce eth0-eth3
-# Tutte condividono lo stesso subnet 192.168.8.100/24
-auth strong
-allow admin
-
-# Proxy per eth0
-proxy -p8080 -i192.168.8.100 -e192.168.8.100
-
-# Proxy per eth1
-proxy -p8081 -i192.168.8.100 -e192.168.8.100
-
-# Proxy per eth2
-proxy -p8082 -i192.168.8.100 -e192.168.8.100
-
-# Proxy per eth3
-proxy -p8083 -i192.168.8.100 -e192.168.8.100
-
-# Configurazione Huawei E3372
-proxy -p8084 -i192.168.8.100 -e192.168.8.100
+# Abilita il proxy SOCKS5 sulla porta 1080
+socks -p1080
